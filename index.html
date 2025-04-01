@@ -1,17 +1,434 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Portofolio</title>
-  <base href="/">
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Raden Muhammad Hadi Suryo Suharto - Data Scientist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @font-face {
+        font-family: 'LucideIcons';
+        /* Using CDN link as provided */
+        src: url(https://cdn.jsdelivr.net/npm/lucide-static@latest/font/Lucide.ttf) format('truetype');
+      }
+      .lucide {
+        font-family: 'LucideIcons';
+        font-size: 1.25rem; /* Adjust icon size as needed */
+        line-height: 1;
+        display: inline-block; /* Prevents layout shifts */
+      }
+      /* Basic scrollbar styling for dark mode */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #1f2937; /* gray-800 */
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: #4b5563; /* gray-600 */
+        border-radius: 20px;
+        border: 2px solid #1f2937; /* gray-800 */
+      }
+       ::-webkit-scrollbar-thumb:hover {
+        background-color: #6b7280; /* gray-500 */
+      }
+       /* Style for the particles container */
+      #particles-js {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: -1; /* Place particles behind content */
+        background-color: #111827; /* Default dark background */
+      }
+      /* Ensure content is above particles */
+      .content-container {
+          position: relative;
+          z-index: 1;
+      }
+    </style>
+    <script>
+      // Theme switching logic
+      const toggleTheme = () => {
+        const html = document.documentElement;
+        if (html.classList.contains('dark')) {
+          html.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+          updateParticleColor('#f3f4f6'); // Light background color (gray-100)
+        } else {
+          html.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+           updateParticleColor('#111827'); // Dark background color (gray-900)
+        }
+      };
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="0-128x128.jpg">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css?family=Lato|PT+Serif|Roboto" rel="stylesheet">
-<link rel="stylesheet" href="styles.6ec0b010a6eee74bde28.css"></head>
-<body>
-  <app-root></app-root>
-<script type="text/javascript" src="runtime.a66f828dca56eeb90e02.js"></script><script type="text/javascript" src="polyfills.9f773b75ffcda6bb2a95.js"></script><script type="text/javascript" src="scripts.7a32c520a44964561984.js"></script><script type="text/javascript" src="main.71fdb47f1c875e2a4e55.js"></script></body>
+      // Apply saved theme on load
+      document.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('theme') || 'dark'; // Default to dark
+        if (savedTheme === 'light') {
+          document.documentElement.classList.remove('dark');
+           updateParticleColor('#f3f4f6');
+        } else {
+          document.documentElement.classList.add('dark');
+           updateParticleColor('#111827');
+        }
+
+        // Initialize particles.js
+         if (typeof particlesJS !== 'undefined') {
+            loadParticles(savedTheme === 'dark' ? '#111827' : '#f3f4f6');
+         } else {
+            console.error("particles.js not loaded yet");
+         }
+      });
+
+      // Function to load particles with specific background color
+      function loadParticles(bgColor) {
+           // Ensure particlesJS is available
+          if (typeof particlesJS === 'undefined') {
+              console.error("particles.js not loaded before loadParticles call");
+              return;
+          }
+          particlesJS('particles-js', {
+            particles: {
+              number: { value: 80, density: { enable: true, value_area: 800 } },
+              color: { value: '#888888' }, // Adjusted particle color
+              shape: { type: 'circle', stroke: { width: 0, color: '#000000' }, polygon: { nb_sides: 5 }, image: { src: 'img/github.svg', width: 100, height: 100 } },
+              opacity: { value: 0.4, random: false, anim: { enable: false, speed: 1, opacity_min: 0.1, sync: false } },
+              size: { value: 3, random: true, anim: { enable: false, speed: 40, size_min: 0.1, sync: false } },
+              line_linked: { enable: true, distance: 150, color: '#888888', opacity: 0.3, width: 1 }, // Adjusted line color
+              move: { enable: true, speed: 2, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false, attract: { enable: false, rotateX: 600, rotateY: 1200 } }
+            },
+            interactivity: {
+              detect_on: 'canvas',
+              events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
+              modes: { grab: { distance: 400, line_linked: { opacity: 1 } }, bubble: { distance: 400, size: 40, duration: 2, opacity: 8, speed: 3 }, repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 }, remove: { particles_nb: 2 } }
+            },
+            retina_detect: true,
+            // Set background color via style attribute on the #particles-js div
+          });
+           // Update the background color explicitly after initialization
+          updateParticleColor(bgColor);
+      }
+
+       // Function to update particle background color (called by theme toggle and initial load)
+        function updateParticleColor(bgColor) {
+            const particlesContainer = document.getElementById('particles-js');
+            if (particlesContainer) {
+                 particlesContainer.style.backgroundColor = bgColor;
+                 // If using pJS library instance (if available and needed)
+                 // if (window.pJSDom && window.pJSDom[0]) {
+                 //    window.pJSDom[0].pJS.particles.color.value = (bgColor === '#111827' ? '#ffffff' : '#000000'); // Example: change particle color too
+                 //    window.pJSDom[0].pJS.fn.particlesRefresh();
+                 // }
+            }
+        }
+
+    </script>
+  </head>
+  <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300">
+    <div id="particles-js"></div>
+
+    <div class="container mx-auto p-4 md:p-8 max-w-6xl content-container">
+      <button
+        onclick="toggleTheme()"
+        class="fixed top-4 right-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors z-20"
+        aria-label="Toggle theme"
+      >
+        <span class="lucide" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun block dark:hidden"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon hidden dark:block"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        </span>
+      </button>
+
+      <header class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold mb-2 text-blue-600 dark:text-blue-400">
+          Raden Muhammad Hadi Suryo Suharto
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-4">
+          Principal Data Scientist
+        </p>
+        <p class="max-w-3xl mx-auto text-gray-600 dark:text-gray-400 mb-6">
+          Data scientist based in Jakarta with 8+ years of experience across various industries. Focused on data product development using Python & R. Specializing in aquaculture technology solutions and driving sustainability through data-driven initiatives.
+        </p>
+        <div class="flex justify-center space-x-6">
+          <a href="mailto:hadimaster65555@gmail.com" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center space-x-1">
+            <span class="lucide" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            </span>
+            <span>Email</span>
+          </a>
+          <a href="https://www.linkedin.com/in/raden-muhammad-hadi-suryo-suharto/" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center space-x-1">
+             <span class="lucide" aria-hidden="true">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+             </span>
+            <span>LinkedIn</span>
+          </a>
+          <a href="https://github.com/hadimaster65555" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center space-x-1">
+            <span class="lucide" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-1.5 6-6.5.08-1.3-.32-2.7-.95-3.8-.19-.49-.09-1.07.24-1.48C19.91 2.62 17.31 2 12 2c-5.31 0-7.91.62-8.29 1.22-.33.41-.43.99-.24 1.48-.63 1.1-.03 2.5-.95 3.8-.01 1.3.3 2.7.95 4 .0 5 3 6.5 6 6.5a4.8 4.8 0 0 0-1 3.5v4"/></svg>
+            </span>
+            <span>GitHub</span>
+          </a>
+        </div>
+      </header>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="md:col-span-2 space-y-8">
+          <section>
+             <h2 class="text-2xl font-semibold mb-6 border-l-4 border-blue-500 pl-3 text-black dark:text-white">Experience</h2>
+            <div class="space-y-6">
+              <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg">
+                <h3 class="text-lg font-semibold text-blue-600 dark:text-blue-400">Principal Data Scientist</h3>
+                <p class="text-md font-medium text-gray-700 dark:text-gray-300">DELOS</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Jakarta | 2024 - Present</p>
+                <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                  <li>Leading data-driven initiatives to optimize shrimp management systems and drive sustainability.</li>
+                  <li>Specializing in aquaculture technology solutions.</li>
+                </ul>
+              </div>
+              <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg">
+                <h3 class="text-lg font-semibold text-blue-600 dark:text-blue-400">Data Science Team Lead</h3>
+                <p class="text-md font-medium text-gray-700 dark:text-gray-300">DELOS</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Jakarta | 2022 - 2024</p>
+                 <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                    <li>Built data strategy for science teams.</li>
+                    <li>Developed mathematical and statistical models for shrimp growth prediction and farm operation optimization.</li>
+                    <li>Led BI and Deep Tech Division team to improve core business via digital transformation.</li>
+                 </ul>
+              </div>
+               <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg">
+                <h3 class="text-lg font-semibold text-blue-600 dark:text-blue-400">Senior Data Scientist</h3>
+                <p class="text-md font-medium text-gray-700 dark:text-gray-300">DELOS</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Jakarta | 2022 - 2022</p>
+                 <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                    <li>Built data strategy for science teams.</li>
+                    <li>Developed mathematical and statistical models for shrimp growth prediction and farm operation optimization.</li>
+                 </ul>
+              </div>
+              <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg">
+                <h3 class="text-lg font-semibold text-blue-600 dark:text-blue-400">Data Scientist - Financial Services</h3>
+                <p class="text-md font-medium text-gray-700 dark:text-gray-300">Bukalapak</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Jakarta | 2021 - 2022</p>
+                <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                  <li>Analyzed financial services and virtual products performance.</li>
+                  <li>Projects: Mutual Funds Recommendation, Fire Insurance Analysis.</li>
+                </ul>
+              </div>
+               <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg">
+                <h3 class="text-lg font-semibold text-blue-600 dark:text-blue-400">Data Scientist - Growth</h3>
+                <p class="text-md font-medium text-gray-700 dark:text-gray-300">Bukalapak</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Jakarta | 2020 - 2021</p>
+                <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                  <li>Analyzed and modeled customer behavior using analytics, interpretable ML, and causal models.</li>
+                  <li>Projects: In-Marketplace game analytics, Voucher distribution, Game player segmentation, Voucher dependence scoring.</li>
+                </ul>
+              </div>
+              <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg">
+                <h3 class="text-lg font-semibold text-blue-600 dark:text-blue-400">Research Development Team Lead</h3>
+                <p class="text-md font-medium text-gray-700 dark:text-gray-300">Quantus Telematika Indonesia</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Bandung | 2020 - 2020</p>
+                 <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                  <li>Led R&D team to create data products and explore new DS/ML methodologies.</li>
+                   <li>Project: OCULUS-DEI (Social Media Analyzer).</li>
+                </ul>
+              </div>
+               <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg">
+                <h3 class="text-lg font-semibold text-blue-600 dark:text-blue-400">Mathematics Modeler - R&D Department</h3>
+                <p class="text-md font-medium text-gray-700 dark:text-gray-300">Quantus Telematika Indonesia</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Bandung | 2018 - 2020</p>
+                 <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                    <li>Built solutions/models for data science and mathematical modeling problems.</li>
+                    <li>Developed web applications (Python, R, Java backend) and performed data analysis (text mining, NLP).</li>
+                </ul>
+              </div>
+              <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg">
+                <h3 class="text-lg font-semibold text-blue-600 dark:text-blue-400">Data Science Consultant</h3>
+                <p class="text-md font-medium text-gray-700 dark:text-gray-300">StatsMaster (Self-employed)</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Jakarta | 2013 - Present</p>
+                 <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                    <li>Provided data science consulting, data product development, training, and talent consulting.</li>
+                </ul>
+              </div>
+               <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg">
+                <h3 class="text-lg font-semibold text-blue-600 dark:text-blue-400">Data Science Mentor</h3>
+                <p class="text-md font-medium text-gray-700 dark:text-gray-300">Freelance</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Anywhere | 2019 - Present</p>
+                 <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                    <li>Taught data science courses for various organizations (DQLab, Arkademy, Dibimbing.id, etc.).</li>
+                    <li>Topics: R/Python/KNIME, Analytics Lifecycle, ML, Deep Learning, NLP, Data Product Dev.</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section>
+             <h2 class="text-2xl font-semibold mb-6 border-l-4 border-blue-500 pl-3 text-black dark:text-white">Education</h2>
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
+              <h3 class="text-lg font-semibold text-blue-600 dark:text-blue-400">Bachelor's Degree in Mathematics</h3>
+              <p class="text-md font-medium text-gray-700 dark:text-gray-300">Indonesia University of Education</p>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Bandung, Indonesia | 2011 - 2015</p>
+              <p class="text-sm text-gray-600 dark:text-gray-300">Graduated with Honors. Major: Pure Mathematics (Specialization: Algebra - Operator Theory and C*-Algebras).</p>
+               <a href="https://www.researchgate.net/publication/281361410_Bimodul-C_Hilbert" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-500 hover:underline dark:text-blue-400 dark:hover:text-blue-300">Final Thesis</a>
+            </div>
+          </section>
+        </div>
+
+        <div class="md:col-span-1 space-y-8">
+          <section>
+             <h2 class="text-2xl font-semibold mb-6 border-l-4 border-blue-500 pl-3 text-black dark:text-white">Skills</h2>
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
+              <div class="mb-4">
+                <h4 class="font-semibold mb-2 text-gray-700 dark:text-gray-300">Programming & Databases:</h4>
+                <div class="flex flex-wrap gap-2">
+                  <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">R</span>
+                  <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Python</span>
+                  <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">SQL</span>
+                  <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Javascript</span>
+                  <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">PostgreSQL</span>
+                  <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">MySQL</span>
+                   <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">SQLite</span>
+                   <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">DuckDB</span>
+                  <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Cassandra</span>
+                  <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Redshift</span>
+                  <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">BigQuery</span>
+                </div>
+              </div>
+              <div class="mb-4">
+                <h4 class="font-semibold mb-2 text-gray-700 dark:text-gray-300">ML & LLM Frameworks:</h4>
+                <div class="flex flex-wrap gap-2">
+                  <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-purple-900 dark:text-purple-300">Scikit-Learn</span>
+                  <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-purple-900 dark:text-purple-300">Tidymodels</span>
+                  <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-purple-900 dark:text-purple-300">SkTime</span>
+                  <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-purple-900 dark:text-purple-300">SkForecast</span>
+                  <span class="bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">OpenAI</span>
+                  <span class="bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">Groq</span>
+                  <span class="bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">Gemini</span>
+                  <span class="bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">Ollama</span>
+                  <span class="bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">LangChain</span>
+                  <span class="bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">Huggingface</span>
+                </div>
+              </div>
+               <div class="mb-4">
+                <h4 class="font-semibold mb-2 text-gray-700 dark:text-gray-300">Data Product Dev & Deployment:</h4>
+                <div class="flex flex-wrap gap-2">
+                  <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Streamlit</span>
+                  <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Shiny</span>
+                  <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Dash</span>
+                   <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Mesop</span>
+                  <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Gradio</span>
+                  <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Docker</span>
+                </div>
+              </div>
+              <div class="mb-4">
+                <h4 class="font-semibold mb-2 text-gray-700 dark:text-gray-300">Data Science Skills:</h4>
+                 <p class="text-sm text-gray-600 dark:text-gray-300">
+                    Explanatory Model Analysis, Time Series Analysis & Forecasting, Model Audit, MLOps, A/B Testing, Multi-Criterion Decision Analysis, Machine Learning Modeling, Mathematical Modeling, Causal Analysis
+                 </p>
+              </div>
+               <div>
+                <h4 class="font-semibold mb-2 text-gray-700 dark:text-gray-300">Domain Expertise:</h4>
+                 <p class="text-sm text-gray-600 dark:text-gray-300">
+                    E-commerce, Aquaculture, Financial & Digital Services, Consulting
+                 </p>
+              </div>
+            </div>
+          </section>
+
+          <section>
+             <h2 class="text-2xl font-semibold mb-6 border-l-4 border-blue-500 pl-3 text-black dark:text-white">Portfolio</h2>
+            <div class="space-y-4">
+              <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md transition-transform transform hover:scale-[1.02]">
+                <h3 class="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-1">Total Hemocyte Counter</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Detect and count shrimp hemocytes from images for health inference. [Company Project]</p>
+                <p class="text-xs text-gray-500 dark:text-gray-500">Tech: Python, Streamlit, YOLOV5</p>
+              </div>
+              <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md transition-transform transform hover:scale-[1.02]">
+                <h3 class="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-1">HR Attrition Dashboard</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Monitor employee performance and predict attrition with ML explainability.</p>
+                <p class="text-xs text-gray-500 dark:text-gray-500 mb-2">Tech: Python, Gradio, Scikit-Learn, LIME</p>
+                <a href="https://huggingface.co/spaces/hadimaster65555/hr_attrition_dashboard" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-500 hover:underline dark:text-blue-400 dark:hover:text-blue-300">View Project</a>
+              </div>
+               <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md transition-transform transform hover:scale-[1.02]">
+                <h3 class="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-1">MNIST Canvas</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Simple app demonstrating deep learning image classification.</p>
+                <p class="text-xs text-gray-500 dark:text-gray-500 mb-2">Tech: Python, NumPy, Gradio, Tensorflow, PIL</p>
+                <a href="https://huggingface.co/spaces/hadimaster65555/mnist_canvas" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-500 hover:underline dark:text-blue-400 dark:hover:text-blue-300">View Project</a>
+              </div>
+               <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md transition-transform transform hover:scale-[1.02]">
+                <h3 class="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-1">Twitter Analysis - Presidential Election 2019</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Analysis of trends, sentiment, and networks from Twitter data using R.</p>
+                <p class="text-xs text-gray-500 dark:text-gray-500 mb-2">Tech: R, RStudio, Rmarkdown, rtweet, tidyverse, graphTweets, sigmajs</p>
+                <a href="https://hadimaster65555.github.io/my-talks/Twitter-Analysis-Using-R_23-Februari-2019/handout-twitter-analysis.html" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-500 hover:underline dark:text-blue-400 dark:hover:text-blue-300">View Analysis</a>
+              </div>
+               <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md transition-transform transform hover:scale-[1.02]">
+                <h3 class="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-1">Text Mining & Wordcloud Analysis (Beritagar)</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Tutorial on web scraping and text analysis using R.</p>
+                <p class="text-xs text-gray-500 dark:text-gray-500 mb-2">Tech: R, Tidyverse, rvest, tidytext, corpus, wordcloud2</p>
+                <a href="https://hadimaster65555.github.io/my-talks/Text-Mining-and-Wordclouds-in-R_26-01-2019/Text_Mining_and_Wordcloud_Using_R.html" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-500 hover:underline dark:text-blue-400 dark:hover:text-blue-300">View Tutorial</a>
+              </div>
+            </div>
+          </section>
+
+           <section>
+             <h2 class="text-2xl font-semibold mb-6 border-l-4 border-blue-500 pl-3 text-black dark:text-white">Featured Articles & Talks</h2>
+            <div class="space-y-4">
+              <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg">
+                <h3 class="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-1">AITALK: Agentic Large Language Model</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Workshop exploring LLMs as intelligent agents, using tools like LangChain and AutoGen.</p>
+                <a href="https://www.youtube.com/watch?v=ggHNaN1mfho" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-500 hover:underline dark:text-blue-400 dark:hover:text-blue-300">Watch Talk</a>
+              </div>
+               <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg">
+                <h3 class="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-1">Customer Data Analysis Best Practices</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Presentation covering cohort analysis, correlation, segmentation, marketing attribution, and EMA.</p>
+                <a href="https://www.youtube.com/watch?v=L6cfN574FX0&list=PL8eJVc-568qp9T1SZaQsUA8X8woA0Y6vI&index=4&t=2s" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-500 hover:underline dark:text-blue-400 dark:hover:text-blue-300">Watch Talk</a>
+              </div>
+               <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg">
+                <h3 class="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-1">Process Mining: Uncover Insights from Flow-based Events - Part 1</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Medium article on using process mining to analyze user behavior in a game.</p>
+                <a href="https://medium.com/bukalapak-data/process-mining-a-powerful-technique-to-uncover-insights-from-flow-based-events-part-1-4130f81fa809" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-500 hover:underline dark:text-blue-400 dark:hover:text-blue-300">Read Article</a>
+              </div>
+               </div>
+          </section>
+
+        </div>
+      </div>
+
+      <footer class="text-center mt-12 pt-8 border-t border-gray-300 dark:border-gray-700">
+            <p class="text-sm text-gray-500 dark:text-gray-400">
+                © <span id="current-year"></span> Raden Muhammad Hadi Suryo Suharto. All rights reserved.
+            </p>
+             <script>
+                // Set current year in footer
+                document.getElementById('current-year').textContent = new Date().getFullYear();
+            </script>
+        </footer>
+
+    </div>
+
+     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Re-run particle initialization after the library script has loaded
+        // Ensure this runs after the DOM is ready and the theme is set
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+             // Check if particlesJS is loaded before calling loadParticles
+            if (typeof particlesJS !== 'undefined') {
+                 loadParticles(currentTheme === 'dark' ? '#111827' : '#f3f4f6');
+            } else {
+                // Optionally wait for particles.js script to load if it's deferred
+                const particleScript = document.querySelector('script[src*="particles.min.js"]');
+                if(particleScript) {
+                    particleScript.onload = () => {
+                         loadParticles(currentTheme === 'dark' ? '#111827' : '#f3f4f6');
+                    }
+                } else {
+                    console.error("particles.js script not found.");
+                }
+            }
+        });
+    </script>
+
+  </body>
 </html>
